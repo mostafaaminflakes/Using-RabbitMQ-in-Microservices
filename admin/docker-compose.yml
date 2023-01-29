@@ -4,9 +4,9 @@ name: 'backend'
 services:
   admin:
     build:
-      context: .
+      context: .docker
       dockerfile: Dockerfile
-    # command: 'php artisan serve --host=0.0.0.0'
+    command: /bin/bash -c "./.docker/start.sh"
     volumes:
       - .:/app
       # - /app/vendor/
@@ -17,11 +17,12 @@ services:
 
   admin_queue:
     build:
-      context: .
+      context: .docker
       dockerfile: Dockerfile
-    # command: 'php artisan queue:work'
+    command: /bin/bash -c "./.docker/queue.sh"
     depends_on:
       - admin_db
+      - admin
 
   admin_db:
     image: mysql:latest

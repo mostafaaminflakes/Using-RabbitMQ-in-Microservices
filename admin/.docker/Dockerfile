@@ -1,4 +1,5 @@
 FROM php:8.1-fpm
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -10,16 +11,21 @@ RUN apt-get update && apt-get install -y \
     unzip \
     vim \
     nano
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Install PHP extensions
-# RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd sockets
 RUN docker-php-ext-install pdo pdo_mysql sockets
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-#################################
+
+# Working directory
 WORKDIR /app
+
+# Copy files from host to container
 COPY . .
-# RUN composer install
-# CMD bash -c "php artisan serve --host=0.0.0.0"
+
+# Execute setup scripts
+# CMD ["./start.sh"]
