@@ -28,4 +28,4 @@ WORKDIR /app
 COPY . .
 
 # Execute setup scripts
-# CMD ["./start.sh"]
+# CMD ["./.docker/start.sh"]

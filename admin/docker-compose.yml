@@ -22,7 +22,6 @@ services:
     command: /bin/bash -c "./.docker/queue.sh"
     depends_on:
       - admin_db
-      - admin
 
   admin_db:
     image: mysql:latest
