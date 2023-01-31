@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources\ProjectResource;
+use App\Jobs\ProductCreatedJob;
 
 class ProductController extends Controller
 {
@@ -24,6 +25,7 @@ class ProductController extends Controller
         $product = Product::create($request->only('title', 'image'));
 
         // ProductCreated::dispatch($product->toArray())->onQueue('main_queue');
+        ProductCreatedJob::dispatch($product->toArray());
 
         return response($product, Response::HTTP_CREATED);
     }

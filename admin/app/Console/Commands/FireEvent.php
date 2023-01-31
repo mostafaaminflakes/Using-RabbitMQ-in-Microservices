@@ -2,23 +2,24 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\PingJob;
 use Illuminate\Console\Command;
 
-class ProjectInit extends Command
+class FireEvent extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'project:init';
+    protected $signature = 'rmq:ping';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Init the project';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -27,9 +28,6 @@ class ProjectInit extends Command
      */
     public function handle()
     {
-        $this->call('key:generate');
-        $this->call('migrate');
-        $this->call('db:seed');
-        $this->call('passport:install');
+        PingJob::dispatch();
     }
 }
