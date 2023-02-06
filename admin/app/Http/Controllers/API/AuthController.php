@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class AuthController extends Controller
 {
@@ -39,6 +40,18 @@ class AuthController extends Controller
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
-        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
+        return response()->json(['user' => auth()->user(), 'access_token' => $accessToken]);
+    }
+
+    public function create_sample_user()
+    {
+        $newUser = User::create([
+            'name' => 'Test User 1',
+            'email' => 'email@host.com',
+            'password' => Hash::make('password'),
+            'password_confirmation' => 'password'
+        ]);
+        $tokenStr = $newUser->createToken('authToken')->accessToken;
+        File::put(getcwd() . "/api_token.txt", $tokenStr);
     }
 }
