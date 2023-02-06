@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class ProjectInit extends Command
 {
@@ -27,8 +28,9 @@ class ProjectInit extends Command
      */
     public function handle()
     {
-        $this->call('key:generate');
-        $this->call('migrate');
-        // $this->call('db:seed');
+        Artisan::call('key:generate');
+        Artisan::call('migrate');
+        // Artisan::call('db:seed');
+        // Artisan::call('queue:work');
     }
 }

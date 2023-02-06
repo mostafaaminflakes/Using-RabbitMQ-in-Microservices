@@ -2,6 +2,20 @@ version: '3.9'
 name: 'frontend'
 
 services:
+  main_db:
+    image: mysql:latest
+    container_name: main_db
+    environment:
+      MYSQL_DATABASE: main
+      # MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    volumes:
+      - ./storage/dbdata:/var/lib/mysql
+    ports:
+      - 33064:3306
+  
   main:
     build:
       context: .docker
@@ -22,15 +36,3 @@ services:
     command: /bin/bash -c "./.docker/queue.sh"
     depends_on:
       - main_db
-
-  main_db:
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: main
-      # MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./storage/dbdata:/var/lib/mysql
-    ports:
-      - 33064:3306

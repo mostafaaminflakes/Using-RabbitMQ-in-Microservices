@@ -11,5 +11,6 @@ then
     php artisan project:init
 fi
 
+php artisan queue:work
 # exec echo "Done. Browse server now..."
 exec php artisan serve --host=0.0.0.0
