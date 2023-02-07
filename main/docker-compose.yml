@@ -1,7 +1,42 @@
 version: '3.9'
 name: 'frontend'
 
-services:
+services:  
+  main:
+    build:
+      context: .docker
+      dockerfile: Dockerfile
+    command: /bin/bash -c "./.docker/start.sh"
+    volumes:
+      - .:/app
+      # - /app/vendor/
+    ports:
+      - 8001:8000
+    depends_on:
+      - main_db    
+    healthcheck:
+      test: curl --fail http://localhost:8000 || exit 1 # ["CMD-SHELL", "pg_isready"]
+      interval: 20s
+      timeout: 10s
+      retries: 15
+
+  main_queue:
+    build:
+      context: .docker
+      dockerfile: Dockerfile
+    # command: /bin/bash -c "./.docker/queue.sh"
+    command: "php artisan queue:work"
+    volumes:
+      - .:/app
+    # volumes:
+    #   - ./.docker/queue.sh:/app/.docker/
+    # restart: always
+    depends_on:
+      # main_db:
+      #   condition: service_healthy
+      main:
+        condition: service_healthy
+      
   main_db:
     image: mysql:latest
     container_name: main_db
@@ -15,24 +50,3 @@ services:
       - ./storage/dbdata:/var/lib/mysql
     ports:
       - 33064:3306
-  
-  main:
-    build:
-      context: .docker
-      dockerfile: Dockerfile
-    command: /bin/bash -c "./.docker/start.sh"
-    volumes:
-      - .:/app
-      # - /app/vendor/
-    ports:
-      - 8001:8000
-    depends_on:
-      - main_db
-
-  main_queue:
-    build:
-      context: .docker
-      dockerfile: Dockerfile
-    command: /bin/bash -c "./.docker/queue.sh"
-    depends_on:
-      - main_db
