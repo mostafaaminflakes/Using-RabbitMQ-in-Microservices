@@ -7,7 +7,8 @@ if [ ! -f "$FILE" ]
 then
     composer install
     cp .env.example .env
-    php artisan queue:work
+    # php artisan queue:work
 fi
 
+php artisan queue:work >> /app/queue.log &
 exec php artisan serve --host=0.0.0.0

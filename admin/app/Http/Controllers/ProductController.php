@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources\ProjectResource;
 use App\Jobs\ProductCreatedJob;
+use App\Jobs\ProductDeletedJob;
+use App\Jobs\ProductUpdatedJob;
 
 class ProductController extends Controller
 {
@@ -24,8 +26,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->only('title', 'image'));
 
-        // ProductCreated::dispatch($product->toArray())->onQueue('main_queue');
-        ProductCreatedJob::dispatch($product->toArray());
+        ProductCreatedJob::dispatch($product->toArray())->onQueue('main_queue');
 
         return response($product, Response::HTTP_CREATED);
     }
@@ -36,7 +37,7 @@ class ProductController extends Controller
 
         $product->update($request->only('title', 'image'));
 
-        // ProductUpdated::dispatch($product->toArray())->onQueue('main_queue');
+        ProductUpdatedJob::dispatch($product->toArray())->onQueue('main_queue');
 
         return response($product, Response::HTTP_ACCEPTED);
     }
@@ -45,7 +46,7 @@ class ProductController extends Controller
     {
         Product::destroy($id);
 
-        // ProductDeleted::dispatch($id)->onQueue('main_queue');
+        ProductDeletedJob::dispatch($id)->onQueue('main_queue');
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

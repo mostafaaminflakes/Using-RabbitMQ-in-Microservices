@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Jobs\PingJob;
 use App\Jobs\ProductCreatedJob;
+use App\Jobs\ProductUpdatedJob;
+use App\Jobs\ProductDeletedJob;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -34,6 +36,12 @@ class EventServiceProvider extends ServiceProvider
             return $job->handle();
         });
         App::bindMethod(ProductCreatedJob::class . '@handle', function ($job) {
+            return $job->handle();
+        });
+        App::bindMethod(ProductUpdatedJob::class . '@handle', function ($job) {
+            return $job->handle();
+        });
+        App::bindMethod(ProductDeletedJob::class . '@handle', function ($job) {
             return $job->handle();
         });
     }

@@ -31,6 +31,5 @@ class ProjectInit extends Command
         Artisan::call('key:generate');
         Artisan::call('migrate');
         // Artisan::call('db:seed');
-        // Artisan::call('queue:work');
     }
 }
