@@ -1,0 +1,45 @@
+version: '3.9'
+name: 'frontend'
+
+services:  
+  main:
+    build:
+      context: .docker
+      dockerfile: Dockerfile
+    command: /bin/bash -c "./.docker/start.sh"
+    volumes:
+      - .:/app
+      # - /app/vendor/
+    ports:
+      - 8001:8000
+    depends_on:
+      - main_db
+    healthcheck:
+      test: curl --fail http://localhost:8000 || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 15
+
+  main_queue:
+    build:
+      context: .docker
+      dockerfile: Dockerfile
+    command: /bin/bash -c "php artisan rabbitmq:consume"
+    volumes:
+      - .:/app
+    depends_on:
+      main:
+        condition: service_healthy
+      
+  main_db:
+    image: mysql:latest
+    container_name: main_db
+    environment:
+      MYSQL_DATABASE: main
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    volumes:
+      - ./storage/dbdata:/var/lib/mysql
+    ports:
+      - 33064:3306
