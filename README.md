@@ -21,7 +21,7 @@ After that the docker compose file runs a few `[.sh]` files inside the container
     - Generate an app key
     - Migrate the database
 
-    - Admin-only commands:
+    Admin-only commands:
 
     - Seed the database
     - Install Laravel Passport
@@ -78,9 +78,9 @@ After that the docker compose file runs a few `[.sh]` files inside the container
 
 ## Postman
 
--   Import the collection file from [/postman/collection.json](postman) into Postman.
+-   Import the collection file from `[/postman/collection.json](postman)` into Postman.
 -   Navigate to `Authorization/Bearer Token` and add the token from [this step](#token) above.
 
 ## Notes
 
-Depending on your internet speed, you may need need to run `[docker compose up -d]` command **twice** at first time only to allow all dependencies to install properly. This is because the queue container depends on other containers to be ready to run.
+Depending on your internet speed, you may need need to run `docker compose up -d` command **twice** at first time only to allow all dependencies to install properly. This is because the queue container depends on other containers to be ready to run.
