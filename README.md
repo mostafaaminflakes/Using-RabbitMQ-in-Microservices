@@ -14,35 +14,35 @@ After that the docker compose file runs a few `[.sh]` files inside the container
 
 ### `[start.sh]` file is responsible for:
 
-1. Install dependencies
-2. Create `[.env]` file
+1. Install dependencies.
+2. Create `[.env]` file.
 3. Run a command to initialize the laravel app:
 
-    - Generate an app key
-    - Migrate the database
+    - Generate an app key.
+    - Migrate the database.
 
     Admin-only commands:
 
-    - Seed the database
-    - Install Laravel Passport
-    - Create a Passport client
-    - Create a sample user
-    - Create a token
+    - Seed the database.
+    - Install Laravel Passport.
+    - Create a Passport client.
+    - Create a sample user.
+    - Create a token.
     - <a name="token"></a>Store the token in a file called `[/api_token.txt]` to use it later with Postman.
-    - Serve the Laravel app
+    - Serve the Laravel app.
 
 ### `[queue.sh]` file is responsible for:
 
-1. Install dependencies
-2. Create `[.env]` file
-3. Start the queue listener
-4. Serve the Laravel app
+1. Install dependencies.
+2. Create `[.env]` file.
+3. Start the queue listener.
+4. Serve the Laravel app.
 
 ## Prerequisites
 
--   RabbitMQ account [https://www.cloudamqp.com/](https://www.cloudamqp.com/)
--   Docker
--   Postman
+-   RabbitMQ account [https://www.cloudamqp.com/](https://www.cloudamqp.com/).
+-   Docker.
+-   Postman.
 
 ## Usage
 
@@ -53,7 +53,7 @@ After that the docker compose file runs a few `[.sh]` files inside the container
     $ git clone https://github.com/mostafaaminflakes/Using-RabbitMQ-in-Microservices.git
     ```
 
--   Populate `[.env.example]` with your RabbitMQ account details:
+-   Populate `[.env.example]` with your RabbitMQ account details.
 
     ```
     RABBITMQ_HOST=
@@ -62,14 +62,14 @@ After that the docker compose file runs a few `[.sh]` files inside the container
     RABBITMQ_VHOST=
     ```
 
--   Admin microservice
+-   Admin microservice.
 
     ```
     $ cd Using-RabbitMQ-in-Microservices/admin
     $ docker compose up -d
     ```
 
--   Client microservice
+-   Client microservice.
 
     ```
     $ cd Using-RabbitMQ-in-Microservices/main
@@ -78,7 +78,7 @@ After that the docker compose file runs a few `[.sh]` files inside the container
 
 ## Postman
 
--   Import the collection file from `[/postman/collection.json](postman)` into Postman.
+-   Import the collection file from [/postman/collection.json](postman) into Postman.
 -   Navigate to `Authorization/Bearer Token` and add the token from [this step](#token) above.
 
 ## Notes
